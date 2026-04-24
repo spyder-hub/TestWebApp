@@ -3,13 +3,13 @@ package com.testapp.demo.controller;
 
 import com.testapp.demo.entity.User;
 import com.testapp.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AuthController {
-
 
     @Autowired
     private UserService userService;
@@ -44,15 +44,17 @@ public class AuthController {
     public String changePassword(
             @RequestParam String username,
             @RequestParam String oldPassword,
-            @RequestParam String newPassword) {
+            @RequestParam String newPassword,
+            HttpServletRequest request) {
 
         User user = userService.findByUsername(username);
 
         if (user != null && user.getPassword().equals(oldPassword)) {
             user.setPassword(newPassword);
             userService.registerUser(user);
+            request.getSession().invalidate();
+            return "redirect:/login?passwordChanged";
         }
-
         return "redirect:/home";
     }
 }

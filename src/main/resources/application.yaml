@@ -8,3 +8,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+server:
+  servlet:
+    session:
+      timeout: 600
+      cookie:
+        http-only: false
+        secure: false
