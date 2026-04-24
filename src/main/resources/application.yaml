@@ -13,7 +13,7 @@ spring:
 server:
   servlet:
     session:
-      timeout: 600
+      timeout: 900
       cookie:
         http-only: false
         secure: false
